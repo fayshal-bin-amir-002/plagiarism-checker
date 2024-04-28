@@ -23,8 +23,8 @@ const Home = () => {
 
     return (
         <div className="container mx-auto min-h-screen flex flex-col justify-center items-center px-5">
-            <h1 className="text-3xl md:text-5xl">plagiarism-checker</h1>
-            <form onSubmit={handleInput} className="w-full md:w-1/2 border p-4 mb-8">
+            <h1 className="text-3xl md:text-5xl font-semibold pb-3 border-b-4 border-green-600 mb-12">Plagiarism Checker</h1>
+            <form onSubmit={handleInput} className="w-full md:w-1/2 border rounded-md shadow-md p-4 mb-8">
                 <textarea name="text1" id="" rows="5" placeholder="Type here... " className="border-2 rounded border-teal-500 w-full p-4 mb-4"></textarea>
                 <textarea name="text2" id="" rows="5" placeholder="Type here... " className="border-2 rounded border-teal-500 w-full p-4 mb-8"></textarea>
                 <button className="w-full bg-green-600 text-white text-lg font-semibold py-2 rounded">Check</button>
