@@ -6,8 +6,12 @@ export const handleResult = (txt1, txt2) => {
     count = 0;
     have = 0;
 
-    const lineArr1 = handleSplitLine(txt1.toLowerCase());
-    const lineArr2 = handleSplitLine(txt2.toLowerCase()); 
+    const line1 = handleSplitLine(txt1.toLowerCase());
+    const line2 = handleSplitLine(txt2.toLowerCase());
+
+    const lineArr1 = line1.filter((l) => l !== '');
+    const lineArr2 = line2.filter((l) => l !== ''); 
+    
     
     if (lineArr1.length === 1 && lineArr2.length === 1) {
         const { count, similarLine } = loopFunc1(lineArr1, lineArr2);
@@ -45,8 +49,9 @@ const loopFunc1 = (line1, line2) => {
     for (i = 0; i < line2.length; i++) {
         have = 0;
         for (j = 0; j < line1[i].length; j++) {
-            if (line1[i].includes(line2[i][j])) {
+            if (line2[i].includes(line1[i][j])) {
                 have++;
+                
             }
         }
         
@@ -56,7 +61,7 @@ const loopFunc1 = (line1, line2) => {
                 similarLine.push(line1[0]);
             }
             else {
-                similarLine.push(line2[i]);
+                similarLine.push(line2[0]);
             }
         }
     }
@@ -72,7 +77,7 @@ const loopFunc2 = (line1, line2) => {
     for (i = 0; i < line2.length; i++) {
         have = 0;
         for (j = 0; j < line1[0].length; j++) {
-            if (line1[0].includes(line2[i][j])) {
+            if (line2[0].includes(line1[i][j])) {
                 have++;
             }
         }
@@ -98,7 +103,7 @@ const loopFunc3 = (line1, line2) => {
     
     for (i = 0; i < line1.length; i++) {
         have = 0;
-        for (j = 0; j < line2[0].length; j++) {
+        for (j = 0; j < line1[0].length; j++) {
             if (line2[0].includes(line1[i][j] && line1[i][j])) {
                 have++;
             }
@@ -130,7 +135,6 @@ const loopFunc4 = (line1, line2) => {
                 have++;
             }
         }
-        console.log('brk');
         if (have === Math.min(line1[i].length, line2[i].length)) {
             count++;
             if (Math.min(line2[i].length, line1[i].length) === line2[i].length) {
