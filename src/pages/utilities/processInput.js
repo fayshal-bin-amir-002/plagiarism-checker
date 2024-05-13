@@ -1,148 +1,59 @@
 let count = 0, similarLine = [], have = 0, i = 0, j = 0;
 
-export const handleResult = (txt1, txt2) => {
+export const handleResult = (txt1, txt2, txt3, txt4, txt5) => {
 
-    similarLine = [];
-    count = 0;
-    have = 0;
 
-    const lineArr1 = handleSplitLine(txt1.toLowerCase()).filter((w) => w.length !== 0);
-    const lineArr2 = handleSplitLine(txt2.toLowerCase()).filter((w) => w.length !== 0);
 
-    // console.log(lineArr1, lineArr2);
+    const textArr1 = handleSplitLine(txt1.toLowerCase()).filter((w) => w.length !== 0);
+    const textArr2 = handleSplitLine(txt2.toLowerCase()).filter((w) => w.length !== 0);
+    const textArr3 = handleSplitLine(txt3.toLowerCase()).filter((w) => w.length !== 0);
+    const textArr4 = handleSplitLine(txt4.toLowerCase()).filter((w) => w.length !== 0);
+    const textArr5 = handleSplitLine(txt5.toLowerCase()).filter((w) => w.length !== 0);
 
-    const { count:finalCount, similarLine:finalSimilar } = loopFunc(lineArr1, lineArr2);
-    const similarLineOutput = finalSimilar.map((line) => line.join(" "));
-    const result1 = Math.min(lineArr1.length, lineArr2.length);
-    const result = (finalCount / result1).toFixed(4) * 100;
-    return { result, similarLineOutput };
+    const allTextArr = [textArr1, textArr2, textArr3, textArr4, textArr5];
 
-    // if (lineArr1.length === 1 && lineArr2.length === 1) {
-    //     const { count, similarLine } = loopFunc1(lineArr1, lineArr2); 
-    //     const similarLineOutput = similarLine.map((line) => line.join(" "));
-    //     const result1 = Math.max(lineArr1.length,  lineArr2.length);
-    //     const result = (count / result1).toFixed(4) * 100;
-    //     return { result, similarLineOutput };
-    // }
-    // else if (lineArr1.length === 1) {
-    //     const { count, similarLine } = loopFunc2(lineArr1, lineArr2);
-    //     const similarLineOutput = similarLine.map((line) => line.join(" "));
-    //     const result1 = Math.max(lineArr1.length,  lineArr2.length);
-    //     const result = (count / result1).toFixed(4) * 100;
-    //     return { result, similarLineOutput };
-    // }
-    // else if (lineArr2.length === 1) {
-    //     const { count, similarLine } = loopFunc3(lineArr1, lineArr2);
-    //     const similarLineOutput = similarLine.map((line) => line.join(" "));
-    //     const result1 = Math.max(lineArr1.length,  lineArr2.length);
-    //     const result = (count / result1).toFixed(4) * 100;
-    //     return { result, similarLineOutput };
-    // }
-    // else {
-    //     const { count: lineCount, similarLine: similarLines } = loopFunc4(lineArr1, lineArr2);
-    //     const similarLineOutput = similarLines.map((line) => line.join(" "));
-    //     const result1 = Math.max(lineArr1.length,  lineArr2.length);
-    //     const result = (lineCount / result1).toFixed(4) * 100;
-    //     return { result, similarLineOutput };
-    // }
+    const finalResult = [];
+
+    // console.log(textArr1, textArr2);
+
+    for (let m = 1; m < allTextArr.length; m++) {
+        similarLine = [];
+        count = 0;
+        const { count: finalCount, similarLine: finalSimilar } = loopFunc(textArr1, allTextArr[m]);
+
+        const similarLineOutput = finalSimilar.map((line) => line.join(" "));
+
+        const result1 = allTextArr[m].length;
+        const result = (finalCount / result1).toFixed(4) * 100;
+
+        finalResult.push({ result, similarLineOutput });
+    }
+
+    return finalResult;
 }
 
 
-// const loopFunc1 = (line1, line2) => {
-//     console.log('function 1');
-
-//     for (i = 0; i < line2.length; i++) {
-//         have = 0;
-//         for (j = 0; j < line2[i].length; j++) {
-//             if (line1[i].includes(line2[i][j])) {
-//                 have++;
-//             }
-//         }
-
-//         if (have === Math.min(line1[i].length, line2[i].length)) {
-//             count++;
-//             if (Math.min(line1[i].length, line2[i].length) === line1[i].length) {
-//                 similarLine.push(line1[0]);
-//             }
-//             else {
-//                 similarLine.push(line2[0]);
-//             }
-//         }
-//     }
-
-//     return { count, similarLine };
-// }
-
-// const loopFunc2 = (line1, line2) => {
-//     console.log('function 2');
-
-//     for (i = 0; i < line2.length; i++) {
-//         have = 0;
-//         for (j = 0; j < line2[i].length; j++) {
-//             if (line1[0].includes(line2[i][j])) {
-//                 have++;
-//             }
-//         }
-
-//         if (have === Math.min(line1[0].length, line2[i].length)) {
-//             count++;
-//             if (Math.min(line1[0].length, line2[i].length) === line1[0].length) {
-//                 similarLine.push(line1[0]);
-//             }
-//             else {
-//                 similarLine.push(line2[i]);
-//             }
-//         }
-//     }
-
-
-//     return { count, similarLine };
-// }
-
-// const loopFunc3 = (line1, line2) => {
-//     console.log('function 3');
-
-//     for (i = 0; i < line1.length; i++) {
-//         have = 0;
-//         for (j = 0; j < line2[0].length; j++) {
-//             if (line2[0].includes(line1[i][j] && line1[i][j])) {
-//                 have++;
-//             }
-//         }
-
-//         if (have === Math.min(line2[0].length, line1[i].length)) {
-//             count++;
-//             if (Math.min(line2[0].length, line1[i].length) === line2[0].length) {
-//                 similarLine.push(line2[0]);
-//             }
-//             else {
-//                 similarLine.push(line1[i]);
-//             }
-//         }
-//     }
-
-
-//     return { count, similarLine };
-// }
-
 const loopFunc = (line1, line2) => {
-    
-    for (let k = 0; k < line2.length; k++) {
-        for (i = 0; i < line1.length; i++) {
-            have = 0;
-            for (j = 0; j < line1[i].length; j++) {
 
-                if (line2[k].includes(line1[i][j])) {
+    for (let k = 0; k < line1.length; k++) {
+        for (i = 0; i < line2.length; i++) {
+            have = 0;
+            for (j = 0; j < line2[i].length; j++) {
+
+                if (line1[k].includes(line2[i][j])) {
                     have++;
                 }
             }
-            if (have === Math.min(line1[i].length, line2[k].length)) {
+            if (have === Math.min(line2[i].length, line1[k].length)) {
                 count++;
-                if (Math.min(line2[k].length, line1[i].length) === line2[k].length) {
-                    similarLine.push(line2[k]);
+                if (Math.min(line1[k].length, line2[i].length) === line1[k].length) {
+                    similarLine.push(line1[k]);
                 }
                 else {
-                    similarLine.push(line1[i]);
+                    similarLine.push(line2[i]);
+                }
+                if(line2.length === 1) {
+                    return { count, similarLine };
                 }
             }
         }
@@ -154,16 +65,15 @@ const loopFunc = (line1, line2) => {
 
 
 const handleSplitLine = (txt) => {
-    // const lines = txt.split(/[!?]+/); 
-    const lines = txt.split(/[.!?]+\s*/);
-    const array = lines.map((line) => handleSplitWord(line));
-    return array;
+    const lines = txt.split(/[.!?]/);
+    const linesArray = lines.map((line) => handleSplitWord(line.trim()));
+    return linesArray;
 }
 
 const handleSplitWord = (line) => {
-    // const nLine = line.replace('.', '').split(/[^\w\s]/g).join('');
     const words = line.split(' ');
-    const wordss = words.filter((w) => w !== '');
-    return wordss;
+    const wordsArray = words.filter((w) => w !== '');
+    const finalWordsArray = wordsArray.map((w) => w.replace(',', '')); 
+    return finalWordsArray; 
 }
 
